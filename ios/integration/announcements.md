@@ -6,21 +6,21 @@ You can use the following queries to fetch announcements
 ```objectivec
 // Fetch all Announcements
 NSError *error = nil;
-LYRQuery *query = [LYRQuery queryWithClass:[LYRAnnouncement class]];
+LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRAnnouncement class]];
 query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES] ];
 NSOrderedSet *announcements = [layerClient executeQuery:query error:&error];
 
 // Fetch all unread Announcements
 NSError *error = nil;
-LYRQuery *query = [LYRQuery queryWithClass:[LYRAnnouncement class]];
-query.predicate = [LYRPredicate predicateWithProperty:@"isUnread" operator:LYRPredicateOperatorIsEqualTo value:@YES];
+LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRAnnouncement class]];
+query.predicate = [LYRPredicate predicateWithProperty:@"isUnread" predicateOperator:LYRPredicateOperatorIsEqualTo value:@YES];
 query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES] ];
 NSOrderedSet *announcements = [layerClient executeQuery:query error:&error];
 
 // Count all unread announcements
 NSError *error = nil;
-LYRQuery *query = [LYRQuery queryWithClass:[LYRAnnouncement class]];
-query.predicate = [LYRPredicate predicateWithProperty:@"isUnread" operator:LYRPredicateOperatorIsEqualTo value:@YES];
+LYRQuery *query = [LYRQuery queryWithQueryableClass:[LYRAnnouncement class]];
+query.predicate = [LYRPredicate predicateWithProperty:@"isUnread" predicateOperator:LYRPredicateOperatorIsEqualTo value:@YES];
 query.sortDescriptors = @[ [NSSortDescriptor sortDescriptorWithKey:@"position" ascending:YES] ];
 NSUInteger count = [layerClient countForQuery:query error:&error];
 ```
@@ -30,6 +30,9 @@ The following code shows you how to mark an `LYRAnnouncement` as read
 ```objectivec
 NSError *error = nil;
 if ([announcement markAsRead:&error]) {
-    NSLog(@"New Conversation creation failed: %@", error);
+    NSLog(@"Announcement marked as read");
+}
+else {
+    NSLog(@"Announcement was already marked as read");
 }
 ```
